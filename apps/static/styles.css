@@ -1,20 +1,138 @@
-
-/* Add a black background color to the top navigation */
 .topnav {
      background-color: #eeeeee;
      width: 100%;
 }
 
-     /* Style the links inside the navigation bar */
-     .topnav a {
-          color: #000000;
-          text-align: center;
-          margin-right: 25px;
-          text-decoration: none;
-          font-size: 17px;
+.topnav a {
+     color: #000000;
+     text-align: center;
+     margin-right: 25px;
+     text-decoration: none;
+     font-size: 17px;
+}
+
+     .topnav a.active {
+          color: #008CBA;
      }
 
-          /* Add a color to the active/current link */
-          .topnav a.active {
-               color: #008CBA;
-          }
+/* Task 1: Links */
+.link-box {
+     display: block;
+     width: 100%;
+     box-sizing: border-box;
+     padding: 10px;
+     text-align: center;
+     margin: 0 0 10px 0;
+     text-decoration: none;
+}
+
+#link1 {
+     background-color: lightgreen;
+     color: brown;
+}
+
+#link2 {
+     background-color: #555555;
+     color: yellow;
+}
+
+#link3 {
+     background-color: black;
+     color: white;
+}
+#link3 {
+     background-color: black;
+     color: white;
+}
+     #link1:visited,
+     #link2:visited,
+     #link3:visited {
+          color: inherit;
+     }
+ #link3:visited {
+          color: white;
+     }
+.link-box:hover {
+     text-decoration: underline;
+     opacity: 0.8;
+}
+
+.link-box:active {
+     color: red;
+}
+
+/* Task 2: Text formatting */
+.format-title {
+     color: green;
+     background-color: beige;
+     padding: 8px;
+     font-family: Georgia, serif;
+     font-size: 24px;
+}
+
+/* Task 3: Listing */
+.list-title {
+     color: white;
+     background-color: cadetblue;
+     padding: 8px;
+     font-family: Georgia, serif;
+     font-size: 24px;
+}
+
+/* Task 4: Fruit table */
+.fruit-table {
+     margin: 10px auto 25px;
+     border-collapse: collapse;
+     font-family: "Times New Roman", serif;
+     font-size: 13px;
+     width: auto;
+}
+
+     .fruit-table caption {
+          caption-side: top;
+          font-weight: bold;
+          text-align: center;
+     }
+
+     .fruit-table th,
+     .fruit-table td {
+          border: 1px solid #888888;
+          padding: 2px 5px;
+          text-align: center;
+     }
+
+/* Camel table */
+.camel-table {
+     width: 70%;
+     margin: 10px auto;
+     border-collapse: collapse;
+     font-family: "Times New Roman", serif;
+     font-size: 13px;
+}
+
+     .camel-table caption {
+          caption-side: top;
+          text-align: center;
+          font-weight: normal;
+     }
+
+     .camel-table th,
+     .camel-table td {
+          border: 1px solid #888888;
+          padding: 3px 5px;
+          text-align: center;
+     }
+
+     .camel-table .camel-image img {
+          display: block;
+          width: 150px;
+          max-width: 100%;
+          height: auto;
+          margin: auto;
+     }
+
+     .camel-table .camel-heading {
+          height: 70px;
+          vertical-align: middle;
+     }
+
