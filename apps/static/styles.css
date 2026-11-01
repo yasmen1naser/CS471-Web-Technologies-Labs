@@ -16,13 +16,14 @@
      }
 
 /* Task 1: Links */
+
 .link-box {
      display: block;
      width: 100%;
      box-sizing: border-box;
-     padding: 10px;
+     padding: 15px;
+     margin: 0 0 10px;
      text-align: center;
-     margin: 0 0 10px 0;
      text-decoration: none;
 }
 
@@ -40,26 +41,29 @@
      background-color: black;
      color: white;
 }
-#link3 {
-     background-color: black;
-     color: white;
+
+#link1:visited {
+     color: purple;
 }
-     #link1:visited,
-     #link2:visited,
-     #link3:visited {
-          color: inherit;
-     }
- #link3:visited {
-          color: white;
-     }
+
+#link2:visited {
+     color: orange;
+}
+
+#link3:visited {
+     color: lightblue;
+}
+
 .link-box:hover {
-     text-decoration: underline;
-     opacity: 0.8;
+     background-color: #cccccc;
+     color: black;
 }
 
 .link-box:active {
-     color: red;
+     background-color: #008CBA;
+     color: white;
 }
+
 
 /* Task 2: Text formatting */
 .format-title {
