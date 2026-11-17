@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <title>Task 1</title>
+</head>
+<body>
+     <h1>{{ heading }}</h1>
+     {% for book in books %}
+     <p>
+          Title: {{ book.title }} |
+          Author: {{ book.author }} |
+          Price: {{ book.price }} |
+          Edition: {{ book.edition }}
+     </p>
+     {% empty %}
+     <p>No books found.</p>
+     {% endfor %}
+</body>
+</html>

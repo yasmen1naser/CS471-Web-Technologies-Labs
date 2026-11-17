@@ -1,21 +1,17 @@
-{% extends "layouts/base.html" %}
+<h1>Simple Query Results</h1>
 
-{% block title %}Search Results{% endblock title %}
-
-{% block content %}
-
-<h1>Search Results</h1>
-
-{% if books %}
-    {% for book in books %}
-<div>
-     <h2>{{ book.title }}</h2>
-     <p>Book ID: {{ book.id }}</p>
-     <p>Author: {{ book.author }}</p>
-</div>
-    {% endfor %}
-{% else %}
-<p>No books found.</p>
-{% endif %}
-
-{% endblock content %}
+{% for obj in books %}
+    ID: {{ obj.id }}
+<br>
+    Title: {{ obj.title }}
+<br>
+    Author: {{ obj.author }}
+<br>
+    Price: {{ obj.price }}
+<br>
+    Edition: {{ obj.edition }}
+<br>
+<hr>
+{% empty %}
+    No books found.
+{% endfor %}

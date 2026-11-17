@@ -1,41 +1,71 @@
-
+from .models import Book
 from django.shortcuts import render
+from django.db.models import Q
+from django.db.models import Count, Sum, Avg, Max, Min
+from .models import Student, Address
 
+def lab8_task1(request):
+    books = Book.objects.filter(Q(price__lte=80))
+    return render(request, 'bookmodule/lab8_book_list.html', {
+        'books': books,
+        'heading': 'Books with Price Less Than or Equal to 80'
+    })
+def lab8_task2(request):
+    books = Book.objects.filter(
+        Q(edition__gt=3) &
+        (Q(title__icontains='qu') | Q(author__icontains='qu'))
+    )
+    return render(request, 'bookmodule/lab8_book_list.html', {
+        'books': books,
+        'heading': "Books with Edition Higher Than 3 and Title or Author Contains 'qu'"
+    })
+def lab8_task3(request):
+    books = Book.objects.filter(
+        Q(edition__lte=3) &
+        ~(Q(title__icontains='qu') | Q(author__icontains='qu'))
+    )
+    return render(request, 'bookmodule/lab8_book_list.html', {
+        'books': books,
+        'heading': "Books with Edition Not Higher Than 3 and Title or Author Does Not Contain 'qu'"
+    })
+def lab8_task4(request):
+    books = Book.objects.all().order_by('title')
+    return render(request, 'bookmodule/lab8_book_list.html', {
+        'books': books,
+        'heading': 'Books Ordered by Title'
+    })
+def lab8_task5(request):
+    result = Book.objects.aggregate(
+        total_books=Count('id'),
+        total_price=Sum('price'),
+        average_price=Avg('price'),
+        maximum_price=Max('price'),
+        minimum_price=Min('price')
+    )
 
+    return render(request, 'bookmodule/lab8_task5.html', result)
+def lab8_task7(request):
+    cities = Address.objects.annotate(
+        student_count=Count('students')
+    )
+
+    return render(request, 'bookmodule/lab8_task7.html', {'cities': cities})
 def index(request):
     return render(request, "bookmodule/index.html")
-
-
 def list_books(request):
     return render(request, "bookmodule/list_books.html")
-
-
 def viewbook(request, bookId):
     return render(request, "bookmodule/one_book.html")
-
-
 def aboutus(request):
     return render(request, "bookmodule/aboutus.html")
-
-
-
 def index2(request, val1):
     return render(request, "bookmodule/index.html")
-
-
-
 def html5_links(request):
     return render(request, 'books/html5/links.html')
-
-
 def html5_formatting(request):
     return render(request, 'books/html5/formatting.html')
-
-
 def html5_listing(request):
     return render(request, 'books/html5/listing.html')
-
-
 def html5_tables(request):
     return render(request, 'books/html5/tables.html')
 
@@ -70,3 +100,23 @@ def search(request):
         return render(request, 'bookmodule/bookList.html', {'books': newBooks})
 
     return render(request, 'bookmodule/search.html')
+
+def simple_query(request):
+    mybooks = Book.objects.filter(title__icontains='delivery')
+    return render(request, 'bookmodule/bookList.html', {'books': mybooks})
+
+def complex_query(request):
+    mybooks = Book.objects.filter(
+        author__isnull=False
+    ).filter(
+        title__icontains='and'
+    ).filter(
+        edition__gte=2
+    ).exclude(
+        price__lte=100
+    )[:10]
+
+    if len(mybooks) >= 1:
+        return render(request, 'bookmodule/bookList.html', {'books': mybooks})
+    else:
+        return render(request, 'bookmodule/index.html')
