@@ -3,7 +3,95 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.db.models import Count, Sum, Avg, Max, Min
 from .models import Student, Address
+from django.db.models import (
+    F,Value, FloatField, ExpressionWrapper,
+    OuterRef, Subquery)
+from .models import Book, Publisher
 
+def lab9_task6(request):
+    publishers = Publisher.objects.annotate(
+        book_count=Count(
+            'books',
+            filter=Q(
+                books__price__gt=50,
+                books__quantity__lt=5,
+                books__quantity__gte=1
+            )
+        )
+    )
+
+    return render(request, 'bookmodule/lab9_task6.html', {
+        'publishers': publishers
+    })
+def lab9_task5(request):
+    publishers = Publisher.objects.annotate(
+        highly_rated_count=Count(
+            'books',
+            filter=Q(books__rating__gte=4)
+        ),
+        highly_rated_quantity=Sum(
+            'books__quantity',
+            filter=Q(books__rating__gte=4)
+        )
+    )
+
+    return render(request, 'bookmodule/lab9_task5.html', {
+        'publishers': publishers
+    })
+def lab9_task4(request):
+    publishers = Publisher.objects.annotate(
+        average_price=Avg('books__price'),
+        minimum_price=Min('books__price'),
+        maximum_price=Max('books__price')
+    )
+
+    return render(request, 'bookmodule/lab9_task4.html', {
+        'publishers': publishers
+    })
+def lab9_task3(request):
+    oldest_books = Book.objects.filter(
+        publisher=OuterRef('pk'),
+        pubdate__isnull=False
+    ).order_by('pubdate')
+
+    publishers = Publisher.objects.annotate(
+        oldest_book_title=Subquery(
+            oldest_books.values('title')[:1]
+        ),
+        oldest_book_date=Subquery(
+            oldest_books.values('pubdate')[:1]
+        )
+    )
+
+    return render(request, 'bookmodule/lab9_task3.html', {
+        'publishers': publishers
+    })
+def lab9_task2(request):
+    publishers = Publisher.objects.annotate(
+        total_stock=Sum('books__quantity')
+    )
+
+    return render(request, 'bookmodule/lab9_task2.html', {
+        'publishers': publishers
+    })
+def lab9_task1(request):
+    total = Book.objects.aggregate(total=Sum('quantity'))['total'] or 0
+
+    if total > 0:
+        books = Book.objects.annotate(
+            availability=ExpressionWrapper(
+                F('quantity') * 100.0 / Value(total),
+                output_field=FloatField()
+            )
+        )
+    else:
+        books = Book.objects.annotate(
+            availability=Value(0.0, output_field=FloatField())
+        )
+
+    return render(request, 'bookmodule/lab9_task1.html', {
+        'books': books
+    })
 def lab8_task1(request):
     books = Book.objects.filter(Q(price__lte=80))
     return render(request, 'bookmodule/lab8_book_list.html', {

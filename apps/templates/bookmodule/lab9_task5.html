@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+     <title>Task 5 - Highly Rated Books</title>
+</head>
+<body>
+     <h1>Highly Rated Books per Publisher</h1>
+
+     <table border="1">
+          <tr>
+               <th>Publisher</th>
+               <th>Number of Highly Rated Books</th>
+               <th>Total Quantity</th>
+          </tr>
+
+          {% for publisher in publishers %}
+          <tr>
+               <td>{{ publisher.name }}</td>
+               <td>{{ publisher.highly_rated_count }}</td>
+               <td>{{ publisher.highly_rated_quantity|default:0 }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="3">No publishers found.</td></tr>
+          {% endfor %}
+     </table>
+</body>
+</html>
